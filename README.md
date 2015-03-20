@@ -1,6 +1,21 @@
 # Faraday::Encoding
 
-TODO: Write a gem description
+A Faraday Middleware sets body encoding when specified by server.
+
+## Motivation
+
+Response body's encoding is set always ASCII-8BIT using with net/http adapter.
+Net::HTTP doesn't handle encoding when server specifies encoding in content-type header.
+Sometimes we caught an Error such as the following:
+
+```ruby
+body = Faraday.new(url: 'https://example.com').get('/').body
+# body contains utf-8 string. ex: "赤坂"
+body.to_json
+# => raise Encoding::UndefinedConversionError: "\xE8" from ASCII-8BIT to UTF-8
+```
+
+That's why I wrote Farday::Encoding gem.
 
 ## Installation
 
@@ -20,11 +35,22 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'faraday/encoding'
+
+conn = Faraday.new do |connection|
+  connection.response :encoding  # use Faraday::Encoding middleware
+  connection.adapter Faraday.default_adapter # net/http
+end
+
+response = conn.get '/nya.html'  # content-type is specified as 'text/plain; charset=utf-8'
+response.body.encoding
+# => #<Encoding:UTF-8>
+```
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/faraday-encoding/fork )
+1. Fork it ( https://github.com/ma2gedev/faraday-encoding/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
