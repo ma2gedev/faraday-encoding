@@ -17,6 +17,8 @@ body.to_json
 
 That's why I wrote Farday::Encoding gem.
 
+SEE ALSO: [response.body is ASCII-8BIT when Content-Type is text/xml; charset=utf-8](https://github.com/lostisland/faraday/issues/139)
+
 ## Installation
 
 Add this line to your application's Gemfile:
