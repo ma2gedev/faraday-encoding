@@ -14,4 +14,4 @@ module Faraday
   end
 end
 
-Faraday::Response.register_middleware :encoding => Faraday::Encoding
+Faraday::Response.register_middleware encoding: Faraday::Encoding
