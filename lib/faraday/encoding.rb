@@ -4,7 +4,7 @@ module Faraday
   class Faraday::Encoding < Faraday::Middleware
     def call(environment)
       @app.call(environment).on_complete do |env|
-        if /;\s*charset=\s*(.+?)\s*(;|$)/.match(env[:response_headers][:content_type])
+        if /charset=([^;|$]+)/.match(env[:response_headers][:content_type])
           begin
             content_charset = ::Encoding.find Regexp.last_match(1)
           rescue
