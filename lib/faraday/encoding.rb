@@ -2,7 +2,6 @@ require "faraday"
 
 module Faraday
   class Faraday::Encoding < Faraday::Middleware
-
     def call(environment)
       @app.call(environment).on_complete do |env|
         content_charset = nil
@@ -12,7 +11,6 @@ module Faraday
         env[:body].force_encoding content_charset if content_charset
       end
     end
-
   end
 end
 
