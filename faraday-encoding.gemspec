@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "faraday-encoding"
-  spec.version       = "0.0.1"
+  spec.version       = "0.0.2"
   spec.authors       = ["Takayuki Matsubara"]
   spec.email         = ["takayuki.1229@m3.com"]
   spec.summary       = %q{A Faraday Middleware sets body encoding when specified by server.}
