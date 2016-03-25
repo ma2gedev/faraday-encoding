@@ -11,7 +11,9 @@ module Faraday
     def call(environment)
       @app.call(environment).on_complete do |env|
         @env = env
-        env[:body].force_encoding(content_charset) if content_charset
+        if encoding = content_charset
+          env[:body].force_encoding(encoding)
+        end
       end
     end
 
@@ -19,15 +21,13 @@ module Faraday
 
     # @return [Encoding|NilClass] returns Encoding or nil
     def content_charset
-      @content_charset ||= ::Encoding.find encoding_name rescue nil
+      ::Encoding.find encoding_name rescue nil
     end
 
     # @return [String] returns a string representing encoding name if it is find in the CONTENT TYPE header
     def encoding_name
-      @encoding_name ||= begin
-        if /charset=([^;|$]+)/.match(content_type)
-          mapped_encoding(Regexp.last_match(1))
-        end
+      if /charset=([^;|$]+)/.match(content_type)
+        mapped_encoding(Regexp.last_match(1))
       end
     end
 
