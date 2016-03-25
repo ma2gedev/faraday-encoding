@@ -1,5 +1,8 @@
 # Faraday::Encoding
 
+[![Gem Version](https://badge.fury.io/rb/faraday-encoding.svg)](http://badge.fury.io/rb/faraday-encoding)
+[![Build Status](https://travis-ci.org/ma2gedev/faraday-encoding.svg)](https://travis-ci.org/ma2gedev/faraday-encoding)
+
 A Faraday Middleware sets body encoding when specified by server.
 
 ## Motivation
