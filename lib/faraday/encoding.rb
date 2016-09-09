@@ -37,7 +37,7 @@ module Faraday
     # if mapping is not found - return the same input parameter `encoding_name`
     # Look at `self.mappings` to see which mappings are available
     def mapped_encoding(encoding_name)
-      self.class.mappings.fetch(encoding_name, default = encoding_name)
+      self.class.mappings.fetch(encoding_name, encoding_name)
     end
 
     # @return [String]
