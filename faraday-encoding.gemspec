@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["takayuki.1229@m3.com"]
   spec.summary       = %q{A Faraday Middleware sets body encoding when specified by server.}
   spec.description   = %q{A Faraday Middleware sets body encoding when specified by server.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/ma2gedev/faraday-encoding"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
