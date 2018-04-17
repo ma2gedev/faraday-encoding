@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name          = "faraday-encoding"
   spec.version       = "0.0.4"
   spec.authors       = ["Takayuki Matsubara"]
-  spec.email         = ["takayuki.1229@m3.com"]
+  spec.email         = ["takayuki.1229@gmail.com"]
   spec.summary       = %q{A Faraday Middleware sets body encoding when specified by server.}
   spec.description   = %q{A Faraday Middleware sets body encoding when specified by server.}
   spec.homepage      = "https://github.com/ma2gedev/faraday-encoding"
