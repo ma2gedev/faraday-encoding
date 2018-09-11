@@ -39,6 +39,20 @@ describe Faraday::Encoding do
     end
   end
 
+  context 'deal correctly with frozen strings' do
+    let(:response_encoding) do
+      'utf-8'
+    end
+    let(:response_body) do
+      'abc'.force_encoding(Encoding::ASCII_8BIT).freeze
+    end
+
+    it 'set encoding to utf-8' do
+      response = client.get('/')
+      expect(response.body.encoding).to eq(Encoding::UTF_8)
+    end
+  end
+
   context 'deal correctly with a non standard encoding names' do
     context 'utf8' do
       let(:response_encoding) do
