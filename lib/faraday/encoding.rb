@@ -19,12 +19,8 @@ module Faraday
         }
       end
 
-      def default_encoding
-        @default_encoding ||= 'utf-8'
+      attr_accessor :default_encoding
       end
-
-      attr_writer :default_encoding
-    end
 
     private
 
