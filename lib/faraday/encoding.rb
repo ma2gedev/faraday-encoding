@@ -20,7 +20,7 @@ module Faraday
       end
 
       attr_accessor :default_encoding
-      end
+    end
 
     private
 
@@ -38,9 +38,8 @@ module Faraday
 
     # @return [TrueClass, FalseClass] checks if the charset derictive is present in the CONTENT TYPE header
     def charset_derective?
-      content_type.match?(/charset=/)
+      content_type&.match?(/charset=([^;|$]+)/)
     end
-
 
     # @param [String] encoding_name
     # @return [String] tries to find a mapping for the encoding name
