@@ -5,7 +5,7 @@ module Faraday
     def call(environment)
       @app.call(environment).on_complete do |env|
         @env = env
-        if encoding = charset_derective? ? content_charset : self.class.default_encoding
+        if encoding = charset_directive? ? content_charset : self.class.default_encoding
           env[:body] = env[:body].dup if env[:body].frozen?
           env[:body].force_encoding(encoding)
         end
@@ -36,8 +36,8 @@ module Faraday
       end
     end
 
-    # @return [TrueClass, FalseClass] checks if the charset derictive is present in the CONTENT TYPE header
-    def charset_derective?
+    # @return [TrueClass, FalseClass] checks if the charset directive is present in the CONTENT TYPE header
+    def charset_directive?
       content_type&.match?(/charset=([^;|$]+)/)
     end
 
