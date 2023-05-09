@@ -2,20 +2,24 @@ require "faraday"
 
 module Faraday
   class Faraday::Encoding < Faraday::Middleware
-    def self.mappings
-      {
-        'utf8' => 'utf-8'
-      }
-    end
-
     def call(environment)
       @app.call(environment).on_complete do |env|
         @env = env
-        if encoding = content_charset
+        if encoding = charset_directive? ? content_charset : self.class.default_encoding
           env[:body] = env[:body].dup if env[:body].frozen?
           env[:body].force_encoding(encoding)
         end
       end
+    end
+
+    class << self
+      def mappings
+        {
+          'utf8' => 'utf-8'
+        }
+      end
+
+      attr_accessor :default_encoding
     end
 
     private
@@ -30,6 +34,11 @@ module Faraday
       if /charset=([^;|$]+)/.match(content_type)
         mapped_encoding(Regexp.last_match(1))
       end
+    end
+
+    # @return [TrueClass, FalseClass] checks if the charset directive is present in the CONTENT TYPE header
+    def charset_directive?
+      content_type&.match?(/charset=([^;|$]+)/)
     end
 
     # @param [String] encoding_name

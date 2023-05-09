@@ -109,4 +109,33 @@ describe Faraday::Encoding do
       expect(response.body.encoding).to eq(Encoding::ASCII_8BIT)
     end
   end
+
+  context 'default encoding' do
+    around do |example|
+      encoding_was = Faraday::Encoding.default_encoding
+      Faraday::Encoding.default_encoding = Encoding::WINDOWS_1251
+      example.run
+      Faraday::Encoding.default_encoding = encoding_was
+    end
+
+    shared_examples 'uses default encoding' do
+      it do
+        response = client.get('/')
+        expect(response.body.encoding).to eq(Encoding::WINDOWS_1251)
+        expect(response.body.encode(Encoding::UTF_8)).to eq('привет')
+      end
+    end
+
+    context 'no content_type header' do
+      let(:response_headers) {}
+      let(:response_body) {'привет'.encode(Encoding::WINDOWS_1251)}
+      it_behaves_like 'uses default encoding'
+    end
+
+    context 'no charset dericitive' do
+      let(:response_headers) {{ 'content-type' => "text/html" }}
+      let(:response_body) {'привет'.encode(Encoding::WINDOWS_1251)}
+      it_behaves_like 'uses default encoding'
+    end
+  end
 end
