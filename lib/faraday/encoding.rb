@@ -13,7 +13,7 @@ module Faraday
         @env = env
         if encoding = content_charset
           env[:body] = env[:body].dup if env[:body].frozen?
-          env[:body].force_encoding(encoding)
+          env[:body].force_encoding(encoding) if !env[:body].nil?
         end
       end
     end
