@@ -17,6 +17,9 @@ describe Faraday::Encoding do
       stub.get('/redirected') do
         [redirected_status, redirected_headers, redirected_body]
       end
+      stub.post('/post') do
+        [post_response_status, post_response_headers, post_response_body]
+      end
     end
   end
 
@@ -107,6 +110,20 @@ describe Faraday::Encoding do
     it 'does not memoize redirect encoding' do
       response = client.get('/')
       expect(response.body.encoding).to eq(Encoding::ASCII_8BIT)
+    end
+  end
+
+  context 'ignore with an empty body' do
+    let(:post_response_status) { 204 }
+    let(:post_response_headers) do
+      { 'content-type' => "text/plain; charset=utf-8" }
+    end
+    let(:post_response_body) do
+      nil
+    end
+
+    it 'skips `force_encoding`' do
+      expect { client.post('/post') }.not_to raise_error
     end
   end
 end
